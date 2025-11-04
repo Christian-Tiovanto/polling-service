@@ -31,7 +31,7 @@ services:
     image: poll_app
     container_name: poll_app1
     ports:
-      - '3005:3000'
+      - '3005:${PORT}'
     env_file:
       - .env
     extra_hosts:
@@ -41,7 +41,7 @@ services:
     image: poll_app
     container_name: poll_app2
     ports:
-      - '3008:3000'
+      - '3008:${PORT}'
     env_file:
       - .env
     extra_hosts:
