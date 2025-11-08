@@ -14,7 +14,7 @@ This service operates as a dedicated backend server, providing comprehensive API
 * **Polling Management:** Handling all related operational tasks required for a robust polling lifecycle.
 
 ## 🛠️ Tech Stack
-<img width="1453" height="583" alt="image" src="https://github.com/user-attachments/assets/353a0cda-6007-45e7-a48c-7f5b0523ce00" />
+<img width="1367" height="537" alt="image" src="https://github.com/user-attachments/assets/ac91500b-db2f-4ffc-8345-d89348ef7b3d" />
 
 This project utilizes a modern, robust technology stack designed for scalability and reliability:
 
@@ -44,7 +44,8 @@ Ensure you have **[Docker](https://www.docker.com/get-started)** installed and r
 
 1.  **Clone the Repository**
     ```bash
-    git clone https://github.com/Christian-Tiovanto/polling-service.git
+    git clone [https://github.com/DevonLoen/polling-service.git](https://github.com/DevonLoen/polling-service.git)
+    cd polling-service
     ```
 
 2.  **Set Up Environment Variables**
@@ -53,15 +54,18 @@ Ensure you have **[Docker](https://www.docker.com/get-started)** installed and r
     cp .env.sample .env
     ```
 
-3.  **Start the Application**
-    Use Docker Compose to spin up the entire stack (application, database, and message broker).
+3.  **Start the Application Cluster**
+    Use Docker Compose to spin up the entire stack.
+    > **Note:** This command will start **two** separate containers for the polling service (simulating a cluster for horizontal scaling) along with the necessary database and message broker.
     ```bash
     docker compose up -d
     ```
 
 ### ✅ Verification
 
-To confirm the service is running correctly, open your browser and navigate to:
-**[http://localhost:3008/api-docs](http://localhost:3008/api-docs)**
+To confirm the service cluster is running correctly, you can access the API documentation for both instances:
 
-If successful, you will see the Swagger API documentation for the service. 🎉
+* **Node 1:** [http://localhost:3005/api-docs](http://localhost:3005/api-docs)
+* **Node 2:** [http://localhost:3008/api-docs](http://localhost:3008/api-docs)
+
+If successful, you will see the Swagger API documentation on both ports. 🎉
