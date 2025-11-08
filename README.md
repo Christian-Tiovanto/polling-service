@@ -44,7 +44,7 @@ Ensure you have **[Docker](https://www.docker.com/get-started)** installed and r
 
 1.  **Clone the Repository**
     ```bash
-    git clone https://github.com/DevonLoen/polling-service.git
+    git clone https://github.com/Christian-Tiovanto/polling-service.git
     ```
 
 2.  **Set Up Environment Variables**
