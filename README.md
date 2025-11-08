@@ -14,6 +14,7 @@ This service operates as a dedicated backend server, providing comprehensive API
 * **Polling Management:** Handling all related operational tasks required for a robust polling lifecycle.
 
 ## 🛠️ Tech Stack
+<img width="1453" height="583" alt="image" src="https://github.com/user-attachments/assets/353a0cda-6007-45e7-a48c-7f5b0523ce00" />
 
 This project utilizes a modern, robust technology stack designed for scalability and reliability:
 
@@ -43,8 +44,7 @@ Ensure you have **[Docker](https://www.docker.com/get-started)** installed and r
 
 1.  **Clone the Repository**
     ```bash
-    git clone [https://github.com/DevonLoen/polling-service.git](https://github.com/DevonLoen/polling-service.git)
-    cd polling-service
+    git clone https://github.com/DevonLoen/polling-service.git
     ```
 
 2.  **Set Up Environment Variables**
