@@ -1,0 +1,2 @@
+CREATE DATABASE polling;
+CREATE DATABASE auth;
