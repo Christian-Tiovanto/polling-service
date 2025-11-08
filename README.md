@@ -1,5 +1,14 @@
 # Polling Service for Mata Kuliah DevOps
 
+### 👥 Team Members
+* **Jason** - 221111572
+* **Cecilia Ongso** - 221111729
+* **Willy Halim** - 221110079
+* **Devon Marvelous Loen** - 221110226
+* **Christian Tiovanto** - 221111153
+
+---
+
 Welcome to the Polling Service repository. This project serves as the backend infrastructure designed to handle all aspects of polling operations.
 
 ---
@@ -15,6 +24,7 @@ This service operates as a dedicated backend server, providing comprehensive API
 
 ## 🛠️ Tech Stack
 <img width="1367" height="537" alt="image" src="https://github.com/user-attachments/assets/ac91500b-db2f-4ffc-8345-d89348ef7b3d" />
+<img width="932" height="595" alt="image" src="https://github.com/user-attachments/assets/1a565e47-3bb7-4fcc-9e5c-6991b83922b0" />
 
 This project utilizes a modern, robust technology stack designed for scalability and reliability:
 
