@@ -14,6 +14,9 @@ import { PollingGatewayModule } from './modules/polling_gateway/polling-gateway.
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { UserPollingModule } from './modules/user-polling/user-polling.module';
 import { JwtModule } from '@nestjs/jwt';
+import { BullModule } from '@nestjs/bullmq';
+import { MailModule } from './modules/mail/mail.module';
+import IORedis from 'ioredis';
 
 @Module({
   providers: [
@@ -38,6 +41,9 @@ import { JwtModule } from '@nestjs/jwt';
         timezone: process.env.DB_TIMEZONE || 'Asia/Jakarta',
       },
     }),
+    BullModule.forRoot({
+      connection: new IORedis('redis://host.docker.internal:6379'),
+    }),
     AuthModule,
     PollingModule,
     PollingOptionModule,
@@ -45,6 +51,7 @@ import { JwtModule } from '@nestjs/jwt';
     UserPollingModule,
     JwtModule.register({ global: true, secret: process.env.JWT_SECRET }),
     EventEmitterModule.forRoot(),
+    MailModule,
   ],
 })
 export class AppModule {}

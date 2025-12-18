@@ -17,6 +17,8 @@ import {
 } from '../classes/polling,response';
 import { PollingOption } from '@app/modules/polling-option/models/polling-option.entity';
 import { customAlphabet } from 'nanoid';
+import { InjectQueue } from '@nestjs/bullmq';
+import { Queue } from 'bullmq';
 
 @Injectable()
 export class PollingService {
@@ -25,6 +27,7 @@ export class PollingService {
   constructor(
     @InjectRepository(Polling)
     private pollingRepository: Repository<Polling>,
+    @InjectQueue('polling') private pollingQueue: Queue,
     private readonly pollingOptionService: PollingOptionService,
   ) {}
 
@@ -38,6 +41,7 @@ export class PollingService {
   async createPolling(
     dto: CreatePollingDto,
     userId: number,
+    email: string,
   ): Promise<CreatePollingDataResponse> {
     const { title, question, expiredAt, pollingOption } = dto;
 
@@ -94,7 +98,21 @@ export class PollingService {
           return response;
         },
       );
+    const delay = new Date(expiredAt).getTime() - Date.now();
 
+    if (delay > 0) {
+      await this.pollingQueue.add(
+        'poll-ended',
+        {
+          email: email,
+          pollId: transaction.id,
+        },
+        {
+          delay: delay,
+          removeOnComplete: true,
+        },
+      );
+    }
     return transaction;
   }
 

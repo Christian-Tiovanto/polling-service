@@ -58,12 +58,12 @@ Creates a new polling with its associated options.
   @Post()
   async createPolling(
     @CurrentUser() currentUser: JwtPayload,
-    @Body()
-    createPollingDto: CreatePollingDto,
+    @Body() createPollingDto: CreatePollingDto,
   ): Promise<CreatePollingDataResponse> {
     const poll = await this.pollingService.createPolling(
       createPollingDto,
       currentUser.id,
+      currentUser.email,
     );
 
     return poll;
