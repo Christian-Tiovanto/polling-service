@@ -1,0 +1,28 @@
+name: CD - Manual Deploy
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Docker Image Tag to deploy (e.g., a git sha)'
+        required: true
+        default: 'latest'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Manifest Repo
+        run: |
+          # 1. Clone your manifest repository
+          git clone https://${{ secrets.PAT_TOKEN }}@github.com/Christian-Tiovanto/k8s-polling.git
+          cd k8s-polling
+          
+          # 2. Update the image tag in values.yaml
+          yq -i '.image.tag = "${{ github.event.inputs.image_tag }}"' charts/polling-chart/values.yaml
+          
+          # 3. Push the change to trigger ArgoCD
+          git config user.name "Manual Deploy Bot"
+          git config user.email "actions@github.com"
+          git add charts/polling-chart/values.yaml
+          git commit -m "manual deploy: poll-app to ${{ github.event.inputs.image_tag }}"
+          git push

@@ -42,6 +42,8 @@ export class PollingGateway
   private logger: Logger = new Logger('ChatGateway');
 
   handleConnection(client: Socket) {
+    console.log('client.handshake.headers');
+    console.log(client.handshake.headers);
     this.logger.log(`🟢 Client connected: ${client.id}`);
   }
 
@@ -79,13 +81,35 @@ export class PollingGateway
     @MessageBody() data: SubmitPollingDto,
     @ConnectedSocket() client: AuthenticatedSocket,
   ) {
+    const xff = client.handshake.headers['x-forwarded-for'];
+    const clientIp =
+      typeof xff === 'string'
+        ? xff.split(',')[0].trim()
+        : client.conn.remoteAddress;
+
+    // 2. Fetch from ip-api.com
+    let userCountry;
+    try {
+      const response = await fetch(`http://ip-api.com/json/${clientIp}`);
+      const dataIpapi = await response.json();
+
+      if (dataIpapi && dataIpapi.status === 'success') {
+        userCountry = dataIpapi.country;
+      }
+    } catch (error) {
+      this.logger.error(`IP Lookup failed for ${clientIp}: ${error.message}`);
+    }
+    const response = await fetch(`https://ipapi.co/${clientIp}/json/`);
+    const dataIpapi = await response.json();
+    console.log('data ipapi');
+    console.log(dataIpapi);
     const validated = getClassSchema(SubmitPollingDto).validate(data);
     if (validated.error) {
       throw new WsValidationException(validated.error.details[0].message);
     }
     const createUserPollingDto = new CreateUserPollingDto();
     createUserPollingDto.pollingOptionId = data.pollingOptionId;
-
+    createUserPollingDto.userCountry = userCountry;
     await this.userPollingService.createUserPolling(
       data.room,
       createUserPollingDto,

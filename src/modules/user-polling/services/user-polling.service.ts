@@ -11,7 +11,6 @@ import {
   WsGoneException,
   WsNotFoundException,
 } from '@app/exceptions/websocket.exception';
-import { date } from 'joi';
 
 @Injectable()
 export class UserPollingService {
@@ -44,6 +43,7 @@ export class UserPollingService {
     let createdUserPoll: UserPolling;
     try {
       createdUserPoll = await this.userPollingRepository.save({
+        userCountry: createUserPollingDto.userCountry,
         pollingOptionId: createUserPollingDto.pollingOptionId,
         userId,
       });

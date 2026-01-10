@@ -24,7 +24,7 @@ import IORedis from 'ioredis';
     { provide: APP_FILTER, useClass: ExceptionHandlerFilter },
   ],
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST || 'localhost',
@@ -42,7 +42,7 @@ import IORedis from 'ioredis';
       },
     }),
     BullModule.forRoot({
-      connection: new IORedis('redis://host.docker.internal:6379'),
+      connection: new IORedis(process.env.REDIS_URL),
     }),
     AuthModule,
     PollingModule,

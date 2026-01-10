@@ -17,6 +17,7 @@ export interface IUserPolling {
   updatedAt: Date;
   pollingOption: PollingOption;
   pollingOptionId: number;
+  userCountry: string;
 }
 
 @Entity('user_pollings')
@@ -48,4 +49,7 @@ export class UserPolling implements IUserPolling {
     name: 'user_id',
   })
   userId: number;
+
+  @Column({ type: 'varchar', nullable: true })
+  userCountry: string;
 }

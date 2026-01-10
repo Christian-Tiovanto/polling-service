@@ -11,4 +11,11 @@ export class CreateUserPollingDto {
   })
   @JoiSchema(Joi.number().min(1).required())
   pollingOptionId: number;
+
+  @ApiProperty({
+    example: 'JAPAN',
+    description: 'User Country',
+  })
+  @JoiSchema(Joi.string().required())
+  userCountry: string;
 }
