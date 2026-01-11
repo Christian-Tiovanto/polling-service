@@ -17,6 +17,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { BullModule } from '@nestjs/bullmq';
 import { MailModule } from './modules/mail/mail.module';
 import IORedis from 'ioredis';
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 
 @Module({
   providers: [
@@ -43,6 +44,9 @@ import IORedis from 'ioredis';
     }),
     BullModule.forRoot({
       connection: new IORedis(process.env.REDIS_URL),
+    }),
+    PrometheusModule.register({
+      path: '/metrics', // The endpoint Prometheus will scrape
     }),
     AuthModule,
     PollingModule,
