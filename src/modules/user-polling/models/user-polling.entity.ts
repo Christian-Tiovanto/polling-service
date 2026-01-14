@@ -50,6 +50,6 @@ export class UserPolling implements IUserPolling {
   })
   userId: number;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'varchar', nullable: true, name: 'user_country' })
   userCountry: string;
 }

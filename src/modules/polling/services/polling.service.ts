@@ -99,7 +99,6 @@ export class PollingService {
         },
       );
     const delay = new Date(expiredAt).getTime() - Date.now();
-
     if (delay > 0) {
       await this.pollingQueue.add(
         'poll-ended',
@@ -221,6 +220,26 @@ export class PollingService {
         option: opt.option,
         desc: opt.desc,
       })),
+    }));
+  }
+
+  async getPollingResultsByCountry(
+    pollId: number,
+  ): Promise<{ country: string; count: number }[]> {
+    const query = `
+      SELECT up.user_country AS country, COUNT(*) AS count
+      FROM user_pollings up
+      INNER JOIN polling_options po ON up.polling_option_id = po.id
+      WHERE po.polling_id = $1
+      GROUP BY up.user_country
+      ORDER BY count DESC
+    `;
+
+    const results = await this.pollingRepository.query(query, [pollId]);
+
+    return results.map((r) => ({
+      country: r.country || 'Unknown',
+      count: Number(r.count),
     }));
   }
 }

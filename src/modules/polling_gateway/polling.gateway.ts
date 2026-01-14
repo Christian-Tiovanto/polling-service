@@ -42,8 +42,6 @@ export class PollingGateway
   private logger: Logger = new Logger('ChatGateway');
 
   handleConnection(client: Socket) {
-    console.log('client.handshake.headers');
-    console.log(client.handshake.headers);
     this.logger.log(`🟢 Client connected: ${client.id}`);
   }
 
