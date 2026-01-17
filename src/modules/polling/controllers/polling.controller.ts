@@ -60,6 +60,7 @@ Creates a new polling with its associated options.
     @CurrentUser() currentUser: JwtPayload,
     @Body() createPollingDto: CreatePollingDto,
   ): Promise<CreatePollingDataResponse> {
+    console.log('tes untuk update');
     const poll = await this.pollingService.createPolling(
       createPollingDto,
       currentUser.id,
